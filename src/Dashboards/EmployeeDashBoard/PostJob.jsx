@@ -56,7 +56,7 @@ const JobPost = () => {
 
   return (
     <div className="flex mt-10 justify-center items-center min-h-screen bg-gradient-to-r from-indigo-100 via-sky-50 to-indigo-200">
-      {/* ✅ Toast Container */}
+      
       <Toaster position="top-right" reverseOrder={false} />
 
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-lg border border-gray-200">

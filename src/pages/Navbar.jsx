@@ -18,7 +18,7 @@ export default function Navbar({ isLoggedIn, role, onLogout }) {
   const goHome = () => {
     if (role === "employee") navigate("/employee");
     else if (role === "jobseeker") navigate("/jobseeker");
-    else navigate("/"); // fallback
+    else navigate("/"); 
   };
 
 

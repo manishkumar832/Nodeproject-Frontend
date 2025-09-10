@@ -9,13 +9,12 @@ export default function JobseekerDashboard() {
   const [user, setUser] = useState({ name: "" });
   const navigate = useNavigate();
 
-  // ✅ Load user from localStorage
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) setUser(JSON.parse(storedUser));
   }, []);
 
-  // ✅ Fetch jobs
+  
   useEffect(() => {
     const fetchJobs = async () => {
       setLoading(true);
@@ -36,7 +35,7 @@ export default function JobseekerDashboard() {
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-indigo-100 via-sky-50 to-indigo-200 pt-24 px-6 md:px-16 mt-5">
-      {/* Welcome Banner */}
+      
       <div className="bg-gradient-to-r from-indigo-700 to-indigo-500 text-white p-10 rounded-3xl shadow-lg mb-10">
         <h1 className="text-3xl md:text-4xl font-extrabold">
           Hello, {user.name || "Jobseeker"} 👋
@@ -46,7 +45,7 @@ export default function JobseekerDashboard() {
         </p>
       </div>
 
-      {/* Jobs Section */}
+      
       <section>
         <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
           Available Jobs

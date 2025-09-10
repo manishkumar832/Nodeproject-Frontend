@@ -91,7 +91,7 @@ const EmployeeApplications = () => {
 
   return (
     <div className="min-h-screen bg-indigo-50 p-6 mt-20">
-      {/* ✅ Toast container */}
+      
       <Toaster position="top-right" reverseOrder={false} />
 
       <h2 className="text-2xl font-bold mb-6 text-gray-800">

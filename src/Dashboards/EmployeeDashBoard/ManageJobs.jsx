@@ -12,7 +12,7 @@ export default function ManageJobs() {
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user"));
 
-  // ✅ Fetch jobs posted only by logged-in employee
+ 
   const fetchJobs = async () => {
     setLoading(true);
     try {
@@ -20,7 +20,7 @@ export default function ManageJobs() {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-      // Filter by logged-in user id
+      
       const myJobs = res.data.data.filter(
         (job) =>
           job.postedBy === user._id || job.postedBy?._id === user._id
@@ -39,7 +39,7 @@ export default function ManageJobs() {
     fetchJobs();
   }, []);
 
-  // ✅ Update job
+ 
   const handleUpdate = async () => {
     if (!editJob) return;
     try {
@@ -61,7 +61,7 @@ export default function ManageJobs() {
     }
   };
 
-  // ✅ Delete job
+  
   const handleDelete = async (jobId) => {
     if (!window.confirm("Are you sure you want to delete this job?")) return;
 
@@ -86,7 +86,7 @@ export default function ManageJobs() {
       </h1>
 
       {loading ? (
-        // ✅ Spinner while loading
+       
         <div className="flex justify-center items-center min-h-[50vh]">
           <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
         </div>
@@ -99,7 +99,7 @@ export default function ManageJobs() {
           ) : (
             jobs.map((job) =>
               editJob?._id === job._id ? (
-                // ✅ Edit Mode
+              
                 <div
                   key={job._id}
                   className="bg-white p-6 rounded-xl shadow-lg border border-gray-200"
@@ -175,7 +175,7 @@ export default function ManageJobs() {
                   </div>
                 </div>
               ) : (
-                // ✅ View Mode
+              
                 <div
                   key={job._id}
                   className="bg-white p-6 rounded-xl shadow-lg border border-gray-200"

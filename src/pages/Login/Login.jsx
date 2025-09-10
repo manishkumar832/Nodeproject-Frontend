@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast, Toaster } from "react-hot-toast"; 
+import { toast, Toaster } from "react-hot-toast";
 import axios from "axios";
 import { ApiUrl } from "../../App";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai"; // 👈 added
 
 export default function Login({ setUser }) {
   const navigate = useNavigate();
@@ -38,7 +39,6 @@ export default function Login({ setUser }) {
       localStorage.setItem("token", results?.data?.token);
       localStorage.setItem("role", results?.data?.user.role);
 
-    
       setTimeout(() => {
         if (results?.data?.user.role === "employee") {
           navigate("/Employee");
@@ -50,10 +50,9 @@ export default function Login({ setUser }) {
       }, 500);
     } catch (error) {
       console.error(error);
-      toast.error(
-        error?.response?.data?.message || "Login failed ❌",
-        { duration: 3000 }
-      );
+      toast.error(error?.response?.data?.message || "Login failed ❌", {
+        duration: 3000,
+      });
     } finally {
       setLoading(false);
     }
@@ -81,16 +80,27 @@ export default function Login({ setUser }) {
             className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
           />
 
-          <div className="relative">
+         
+          <div className="relative w-full">
             <input
               type={showPassword ? "text" : "password"}
               name="password"
               placeholder="Password"
               value={form.password}
               onChange={handleChange}
-              className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 pr-16"
+              className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 pr-10"
               disabled={loading}
             />
+            <span
+              className="absolute inset-y-0 right-3 flex items-center cursor-pointer text-gray-500"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? (
+                <AiFillEyeInvisible size={20} />
+              ) : (
+                <AiFillEye size={20} />
+              )}
+            </span>
           </div>
         </div>
 

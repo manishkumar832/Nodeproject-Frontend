@@ -23,7 +23,7 @@ const EmployeeDashboard = () => {
       try {
         setLoading(true);
 
-        // Fetch all jobs posted by the employee
+        
         const res = await axios.get(`${ApiUrl}/Employee/AlljobsPosted`, {
           headers: { Authorization: `Bearer ${token}` },
         });
@@ -36,13 +36,12 @@ const EmployeeDashboard = () => {
 
         setJobs(myJobs);
 
-        // Set the most recent job
         const sortedJobs = [...myJobs].sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
         setRecentJob(sortedJobs[0] || null);
 
-        // Fetch applications for all jobs
+       
         let allApplications = [];
 
         for (let job of myJobs) {
@@ -55,7 +54,6 @@ const EmployeeDashboard = () => {
             ? appsRes.data
             : appsRes.data.data || [];
 
-          // Attach job info for each application
           allApplications.push(
             ...apps.map((a) => ({
               ...a,
@@ -65,14 +63,14 @@ const EmployeeDashboard = () => {
           );
         }
 
-        // Remove duplicate applications (if any) by _id
+  
         const uniqueApplications = Array.from(
           new Set(allApplications.map((a) => a._id))
         ).map((id) => allApplications.find((a) => a._id === id));
 
         setApplicationsCount(uniqueApplications.length);
 
-        // Most recent 3 applicants
+       
         const sortedApplicants = uniqueApplications.sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
