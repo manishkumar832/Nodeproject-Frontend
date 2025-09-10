@@ -15,7 +15,7 @@ import Signup from "./pages/Signup/Signup.jsx";
 import EmployeeDashboard from "./Dashboards/EmployeeDashBoard/EmployeeDashboard.jsx";
 import Jobseeker from "./Dashboards/Jobseekerdashboard.jsx/Jobseeker.jsx";
 import Profile from "./pages/Profile.jsx";
-import EditProfile from "./pages/EditProfile.jsx";
+import EditProfile from "./pages/editProfile.jsx"
 import PostJob from "./Dashboards/EmployeeDashBoard/PostJob.jsx";
 import ManageJobs from "./Dashboards/EmployeeDashBoard/ManageJobs.jsx";
 import JobDetails from "./Dashboards/Jobseekerdashboard.jsx/JobDetails.jsx";
