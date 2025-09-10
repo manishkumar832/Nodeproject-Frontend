@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
 import { ApiUrl } from "../../App";
-import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai"; 
 
 export default function Signup() {
   const [form, setForm] = useState({
@@ -11,10 +10,8 @@ export default function Signup() {
     email: "",
     name: "",
     password: "",
-    role: "",
+    role: "",                          
   });
-
-  const [showPassword, setShowPassword] = useState(false); 
 
   const navigate = useNavigate();
 
@@ -34,7 +31,7 @@ export default function Signup() {
         email: form.email,
         username: form.username,
         password: form.password,
-        role: form.role,
+        role: form.role, 
       });
 
       toast.success("Signup successful! Please login.");
@@ -83,28 +80,16 @@ export default function Signup() {
             className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
           />
 
-         
-          <div className="relative w-full">
-            <input
-              type={showPassword ? "text" : "password"}
-              name="password"
-              placeholder="Password"
-              value={form.password}
-              onChange={handleChange}
-              className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 pr-10"
-            />
-            <span
-              className="absolute inset-y-0 right-3 flex items-center cursor-pointer text-gray-500"
-              onClick={() => setShowPassword(!showPassword)}
-            >
-              {showPassword ? (
-                <AiFillEyeInvisible size={20} />
-              ) : (
-                <AiFillEye size={20} />
-              )}
-            </span>
-          </div>
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={form.password}
+            onChange={handleChange}
+            className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
+          />
 
+         
           <select
             name="role"
             value={form.role}
