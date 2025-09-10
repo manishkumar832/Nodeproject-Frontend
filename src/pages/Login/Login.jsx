@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast"; // ✅ no need to import Toaster here
+import toast from "react-hot-toast"; 
 import axios from "axios";
 import { ApiUrl } from "../../App";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
@@ -25,7 +25,7 @@ export default function Login({ setUser }) {
       setLoading(true);
       const results = await axios.post(`${ApiUrl}/auth/login`, form);
 
-      // ✅ toast auto closes in 1 second (global config)
+     
       toast.success("Login successful ✅");
 
       setUser(results?.data?.user);

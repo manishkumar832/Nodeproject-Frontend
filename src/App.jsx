@@ -25,7 +25,7 @@ import EmployeeApplications from "./Dashboards/EmployeeDashBoard/EmployeeApplica
 
 export const ApiUrl = "https://nodeproject-s6y6.onrender.com";
 
-// ✅ Protected Route wrapper
+
 const PrivateRoute = ({ user, children }) => {
   return user ? children : <Navigate to="/login" />;
 };
@@ -41,7 +41,7 @@ const AppContent = () => {
     if (favicon) favicon.href = "/logo.png";
   }, []);
 
-  // ✅ Load user from localStorage on mount
+ 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
     if (storedUser) setUser(JSON.parse(storedUser));
@@ -85,7 +85,7 @@ const AppContent = () => {
       <Navbar isLoggedIn={!!user} role={user?.role} onLogout={handleLogout} />
 
       <Routes>
-        {/* Public Routes */}
+        
         <Route path="/" element={<FrontPage />} />
         <Route path="/signup" element={<Signup setUser={setUser} />} />
         <Route
@@ -93,7 +93,7 @@ const AppContent = () => {
           element={user ? <Navigate to="/" /> : <Login setUser={setUser} />}
         />
 
-        {/* Protected Routes */}
+       
         <Route
           path="/profile"
           element={
@@ -151,7 +151,7 @@ const AppContent = () => {
           }
         />
 
-        {/* Jobs Routes */}
+       
         <Route path="/jobs" element={<JobList />} />
         <Route path="/jobs/:id" element={<JobDetails />} />
         <Route path="/applications" element={<MyApplications />} />

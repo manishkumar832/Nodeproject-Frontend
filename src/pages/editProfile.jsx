@@ -20,7 +20,7 @@ export default function EditProfile() {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
 
-  // Fetch user data
+  
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -48,7 +48,7 @@ export default function EditProfile() {
     fetchProfile();
   }, [token]);
 
-  // Handle input changes
+  
   const handleChange = (e) => {
     if (e.target.name === "profile") {
       setForm({ ...form, profile: e.target.files[0] });
@@ -57,7 +57,6 @@ export default function EditProfile() {
     }
   };
 
-  // Check if user changed anything
   const hasChanges = () => {
     if (!originalData) return false;
     return (
@@ -68,7 +67,7 @@ export default function EditProfile() {
     );
   };
 
-  // Submit update
+ 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
