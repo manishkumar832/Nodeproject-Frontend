@@ -1,18 +1,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast, Toaster } from "react-hot-toast"; 
+import toast from "react-hot-toast"; // ✅ no need to import Toaster here
 import axios from "axios";
 import { ApiUrl } from "../../App";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 export default function Login({ setUser }) {
   const navigate = useNavigate();
-
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-  });
+  const [form, setForm] = useState({ email: "", password: "" });
 
   const handleChange = (e) =>
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -21,39 +18,28 @@ export default function Login({ setUser }) {
     e.preventDefault();
 
     if (!form.email || !form.password) {
-      return toast.error("All fields are required", { duration: 3000 });
+      return toast.error("All fields are required");
     }
 
     try {
       setLoading(true);
-      const results = await axios.post(`${ApiUrl}/auth/login`, {
-        email: form.email,
-        password: form.password,
-      });
+      const results = await axios.post(`${ApiUrl}/auth/login`, form);
 
-      toast.success("Login successful ✅", { duration: 3000 });
+      // ✅ toast auto closes in 1 second (global config)
+      toast.success("Login successful ✅");
 
       setUser(results?.data?.user);
       localStorage.setItem("user", JSON.stringify(results?.data?.user));
       localStorage.setItem("token", results?.data?.token);
       localStorage.setItem("role", results?.data?.user.role);
 
-    
       setTimeout(() => {
-        if (results?.data?.user.role === "employee") {
-          navigate("/Employee");
-        } else if (results?.data?.user.role === "jobseeker") {
-          navigate("/Jobseeker");
-        } else {
-          navigate("/");
-        }
-      }, 500);
+        if (results?.data?.user.role === "employee") navigate("/Employee");
+        else if (results?.data?.user.role === "jobseeker") navigate("/Jobseeker");
+        else navigate("/");
+      }, 400);
     } catch (error) {
-      console.error(error);
-      toast.error(
-        error?.response?.data?.message || "Login failed ❌",
-        { duration: 3000 }
-      );
+      toast.error(error?.response?.data?.message || "Login failed ❌");
     } finally {
       setLoading(false);
     }
@@ -61,8 +47,6 @@ export default function Login({ setUser }) {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gradient-to-r from-indigo-100 via-sky-50 to-indigo-200">
-      <Toaster position="top-right" reverseOrder={false} />
-
       <form
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded-2xl shadow-lg w-96 border border-gray-200"
@@ -88,9 +72,15 @@ export default function Login({ setUser }) {
               placeholder="Password"
               value={form.password}
               onChange={handleChange}
-              className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 pr-16"
+              className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 pr-12"
               disabled={loading}
             />
+            <span
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 cursor-pointer"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
+            </span>
           </div>
         </div>
 
