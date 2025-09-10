@@ -80,14 +80,22 @@ export default function Signup() {
             className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
           />
 
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={form.password}
-            onChange={handleChange}
-            className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400"
-          />
+           <div className="relative w-full">
+      <input
+        type={showPassword ? "text" : "password"}
+        name="password"
+        placeholder="Password"
+        value={form.password}
+        onChange={handleChange}
+        className="w-full border border-gray-300 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-400 pr-10"
+      />
+      <span
+        className="absolute inset-y-0 right-3 flex items-center cursor-pointer text-gray-500"
+        onClick={() => setShowPassword(!showPassword)}
+      >
+        {showPassword ? <AiFillEyeInvisible size={20} /> : <AiFillEye size={20} />}
+      </span>
+    </div>
 
          
           <select
