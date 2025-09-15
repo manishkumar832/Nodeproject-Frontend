@@ -12,6 +12,7 @@ const JobDetails = () => {
   const [appliedJobs, setAppliedJobs] = useState([]);
   const [alreadyApplied, setAlreadyApplied] = useState(false);
 
+  // Application form state
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
@@ -22,6 +23,7 @@ const JobDetails = () => {
 
   const token = localStorage.getItem("token");
 
+  // Fetch job details
   useEffect(() => {
     const fetchJob = async () => {
       setLoading(true);
@@ -40,7 +42,7 @@ const JobDetails = () => {
 
     const fetchApplications = async () => {
       try {
-        const res = await axios.get(`${ApiUrl}/myApplications`, {
+        const res = await axios.get(`${ApiUrl}/jobSeeker/myApplications`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         setAppliedJobs(res.data.data);
@@ -53,6 +55,7 @@ const JobDetails = () => {
     fetchApplications();
   }, [id, token]);
 
+  // Check if already applied
   useEffect(() => {
     if (job && appliedJobs.length > 0) {
       const applied = appliedJobs.some((app) => app.job._id === job._id);
@@ -60,70 +63,66 @@ const JobDetails = () => {
     }
   }, [job, appliedJobs]);
 
-  const handleApply = async (e) => {
-    e.preventDefault();
-    if (!job) return;
 
-    const formData = new FormData();
-    formData.append("jobId", job._id);
-    formData.append("name", name);
-    formData.append("email", email);
-    formData.append("phone", phone);
-    formData.append("skills", skills);
-    formData.append("education", education);
-    if (resumeFile) formData.append("resume", resumeFile);
-    if (coverLetterFile) formData.append("coverLetter", coverLetterFile);
 
-    try {
-      await axios.post(`${ApiUrl}/jobSeeker/apply`, formData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "multipart/form-data",
-        },
-      });
-      toast.success("Application submitted successfully!");
-      setShowForm(false);
-      setAlreadyApplied(true);
-    } catch (err) {
-      console.error("Error applying:", err.response?.data || err.message);
-      toast.error("Failed to submit application.");
-    }
-  };
+const handleApply = async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData();
+  formData.append("jobId", job._id);
+  formData.append("name", name);
+  formData.append("email", email);
+  formData.append("phone", phone);
+  formData.append("skills", skills);
+  formData.append("education", education);
+  if (resumeFile) formData.append("resume", resumeFile);
+  if (coverLetterFile) formData.append("coverLetter", coverLetterFile);
+
+  try {
+    const res = await axios.post(`${ApiUrl}/jobSeeker/apply`, formData, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    toast.success(res.data.message || "Application submitted successfully ✅");
+  } catch (err) {
+    const errorMsg = err.response?.data?.message || "Failed to apply ❌";
+    toast.error(errorMsg);
+  }
+};
+
+
+  if (loading) return <p className="text-center mt-10">Loading...</p>;
+  if (!job) return <p className="text-center mt-10">Job not found</p>;
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-indigo-100 via-white to-indigo-100 flex items-center justify-center p-4 mt-10">
-  <Toaster position="top-right" />
-  {loading ? (
-    <p className="min-h-screen bg-indigo-50  flex items-center justify-center">Loading...</p>
-  ) : !job ? (
-    <p className="text-center text-gray-600 text-lg">Job not found</p>
-  ) : (
-    <div className="max-w-md w-full bg-white rounded shadow-lg p-4">
-      <h2 className="text-xl font-bold mb-2">{job.Title}</h2>
-      <p className="text-gray-700 mb-3 text-sm">{job.description}</p>
-      <p className="mb-1 text-sm"><strong>Company:</strong> {job.company}</p>
-      <p className="mb-1 text-sm"><strong>Location:</strong> {job.location}</p>
-      <p className="mb-3 text-sm"><strong>Salary:</strong> {job.salary}</p>
+    <div className="max-w-3xl mx-auto mt-10 p-6 bg-white rounded shadow-lg">
+      <Toaster position="top-right" />
+      <h2 className="text-2xl font-bold mb-2">{job.Title}</h2>
+      <p className="text-gray-700 mb-4">{job.description}</p>
+      <p className="mb-1"><strong>Company:</strong> {job.company}</p>
+      <p className="mb-1"><strong>Location:</strong> {job.location}</p>
+      <p className="mb-4"><strong>Salary:</strong> {job.salary}</p>
 
       {!alreadyApplied && !showForm && (
         <button
           onClick={() => setShowForm(true)}
-          className="px-3 py-1.5 bg-indigo-600 text-white rounded hover:bg-indigo-700 mt-2 text-sm"
+          className="px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700"
         >
           Apply Now
         </button>
       )}
 
       {alreadyApplied && (
-        <p className="text-green-600 font-semibold mt-3 text-sm">
-          You have already applied for this job.
-        </p>
+        <p className="text-green-600 font-semibold mt-4">You have already applied for this job.</p>
       )}
 
       {showForm && !alreadyApplied && (
         <form
           onSubmit={handleApply}
-          className="mt-4 grid gap-3 bg-gray-50 p-3 rounded shadow"
+          className="mt-6 grid gap-4 bg-gray-50 p-4 rounded shadow"
         >
           <input
             type="text"
@@ -131,7 +130,7 @@ const JobDetails = () => {
             value={name}
             onChange={(e) => setName(e.target.value)}
             required
-            className="border p-2 rounded w-full text-sm"
+            className="border p-2 rounded w-full"
           />
           <input
             type="email"
@@ -139,7 +138,7 @@ const JobDetails = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="border p-2 rounded w-full text-sm"
+            className="border p-2 rounded w-full"
           />
           <input
             type="text"
@@ -147,7 +146,7 @@ const JobDetails = () => {
             value={phone}
             onChange={(e) => setPhone(e.target.value)}
             required
-            className="border p-2 rounded w-full text-sm"
+            className="border p-2 rounded w-full"
           />
           <input
             type="text"
@@ -155,7 +154,7 @@ const JobDetails = () => {
             value={skills}
             onChange={(e) => setSkills(e.target.value)}
             required
-            className="border p-2 rounded w-full text-sm"
+            className="border p-2 rounded w-full"
           />
           <input
             type="text"
@@ -163,30 +162,30 @@ const JobDetails = () => {
             value={education}
             onChange={(e) => setEducation(e.target.value)}
             required
-            className="border p-2 rounded w-full text-sm"
+            className="border p-2 rounded w-full"
           />
           <input
             type="file"
             onChange={(e) => setResumeFile(e.target.files[0])}
-            className="border p-2 rounded w-full text-sm"
+            className="border p-2 rounded w-full"
           />
           <input
             type="file"
             onChange={(e) => setCoverLetterFile(e.target.files[0])}
-            className="border p-2 rounded w-full text-sm"
+            className="border p-2 rounded w-full"
           />
 
           <div className="flex gap-2">
             <button
               type="submit"
-              className="px-3 py-1.5 bg-green-600 text-white rounded hover:bg-green-700 text-sm"
+              className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
             >
-              Submit
+              Submit Application
             </button>
             <button
               type="button"
               onClick={() => setShowForm(false)}
-              className="px-3 py-1.5 bg-red-500 text-white rounded hover:bg-red-600 text-sm"
+              className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
             >
               Cancel
             </button>
@@ -194,8 +193,6 @@ const JobDetails = () => {
         </form>
       )}
     </div>
-  )}
-</div>
   );
 };
 
