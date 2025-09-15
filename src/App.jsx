@@ -23,7 +23,7 @@ import JobList from "./Dashboards/Jobseekerdashboard.jsx/JobList.jsx";
 import MyApplications from "./Dashboards/Jobseekerdashboard.jsx/MyApplications.jsx";
 import EmployeeApplications from "./Dashboards/EmployeeDashBoard/EmployeeApplications.jsx";
 
-export const ApiUrl = "https://nodeproject-s6y6.onrender.com";
+ export const ApiUrl = "https://nodeproject-s6y6.onrender.com";
 
 
 const PrivateRoute = ({ user, children }) => {
