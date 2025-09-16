@@ -42,7 +42,29 @@ const MyApplications = () => {
     }
   };
 
-  if (loading) return <p className="min-h-screen bg-indigo-50  flex items-center justify-center">Loading applications...</p>;
+  // helper to style status
+  const getStatusStyle = (status) => {
+    switch (status) {
+      case "applied":
+        return "text-blue-500 font-semibold";
+      case "shortlisted":
+        return "text-yellow-500 font-semibold";
+      case "accepted":
+        return "text-green-600 font-semibold";
+      case "rejected":
+        return "text-red-600 font-semibold";
+      default:
+        return "text-gray-500 font-semibold";
+    }
+  };
+
+  if (loading)
+    return (
+      <p className="min-h-screen bg-indigo-50 flex items-center justify-center">
+        Loading applications...
+      </p>
+    );
+
   if (applications.length === 0)
     return <p className="text-center mt-30 text-gray-600">No applications found.</p>;
 
@@ -50,7 +72,7 @@ const MyApplications = () => {
     <div className="min-h-screen bg-gradient-to-r from-indigo-100 via-sky-50 to-indigo-200 mt-10 py-10">
       <Toaster position="top-right" />
       <div className="max-w-4xl mx-auto p-6">
-        <h2 className="text-3xl font-bold text-gray-600 mb-6 text-center"> Applications</h2>
+        <h2 className="text-3xl font-bold text-gray-600 mb-6 text-center">My Applications</h2>
         <ul className="space-y-4">
           {applications.map((app) => (
             <li
@@ -58,8 +80,18 @@ const MyApplications = () => {
               className="border border-gray-300 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200"
             >
               <p className="mb-1"><strong>Job:</strong> {app.job?.Title || "N/A"}</p>
-              <p className="mb-1"><strong>Status:</strong> {app.status || "Pending"}</p>
+              <p className="mb-1">
+                <strong>Status:</strong>{" "}
+                <span className={getStatusStyle(app.status)}>
+                  {app.status || "Pending"}
+                </span>
+              </p>
+              <p className="mb-1">
+                <strong>Applied On:</strong>{" "}
+                {app.appliedOn ? new Date(app.appliedOn).toLocaleDateString() : "N/A"}
+              </p>
               <p className="mb-3"><strong>Applicant Name:</strong> {app.name}</p>
+
               <button
                 onClick={() => handleDelete(app._id)}
                 className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors duration-200"
