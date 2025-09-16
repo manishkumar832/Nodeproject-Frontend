@@ -125,7 +125,7 @@ const JobDetails = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-indigo-100 via-sky-50 to-indigo-200 flex justify-center items-start py-10 mt-20">
-      <div className="max-w-3xl w-full p-6 bg-white rounded shadow-lg mt-10">
+      <div className="max-w-2xl w-full p-6 bg-white rounded shadow-lg mt-10">
         <Toaster position="top-right" />
         <h2 className="text-2xl font-bold mb-2">{job.Title}</h2>
         <p className="text-gray-700 mb-4">{job.description}</p>
@@ -158,77 +158,119 @@ const JobDetails = () => {
         )}
 
         {showForm && !alreadyApplied && (
-          <form
-            onSubmit={handleApply}
-            className="mt-6 grid gap-4 bg-gray-50 p-4 rounded shadow"
-          >
-            <input
-              type="text"
-              placeholder="Name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              className="border p-2 rounded w-full"
-            />
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              className="border p-2 rounded w-full"
-            />
-            <input
-              type="text"
-              placeholder="Phone"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              required
-              className="border p-2 rounded w-full"
-            />
-            <input
-              type="text"
-              placeholder="Skills"
-              value={skills}
-              onChange={(e) => setSkills(e.target.value)}
-              required
-              className="border p-2 rounded w-full"
-            />
-            <input
-              type="text"
-              placeholder="Education"
-              value={education}
-              onChange={(e) => setEducation(e.target.value)}
-              required
-              className="border p-2 rounded w-full"
-            />
-            <input
-              type="file"
-              onChange={(e) => setResumeFile(e.target.files[0])}
-              className="border p-2 rounded w-full"
-            />
-            <input
-              type="file"
-              onChange={(e) => setCoverLetterFile(e.target.files[0])}
-              className="border p-2 rounded w-full"
-            />
-            <div className="flex gap-2">
-              <button
-                type="submit"
-                className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
-              >
-                Submit Application
-              </button>
-              <button
-                type="button"
-                onClick={() => setShowForm(false)}
-                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-              >
-                Cancel
-              </button>
-            </div>
-          </form>
-        )}
+  <form
+    onSubmit={handleApply}
+    className="mt-6 space-y-4 bg-gray-50 p-6 rounded-lg shadow"
+  >
+   
+    <div>
+      <label className="block text-gray-700 font-medium mb-1">Full Name</label>
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        required
+        className="border p-2 rounded w-full focus:ring focus:ring-indigo-200"
+        placeholder="Enter your full name"
+      />
+    </div>
+
+    
+    <div>
+      <label className="block text-gray-700 font-medium mb-1">Email Address</label>
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+        className="border p-2 rounded w-full focus:ring focus:ring-indigo-200"
+        placeholder="example@domain.com"
+      />
+    </div>
+
+    
+    <div>
+      <label className="block text-gray-700 font-medium mb-1">Phone Number</label>
+      <input
+        type="text"
+        value={phone}
+        onChange={(e) => setPhone(e.target.value)}
+        required
+        className="border p-2 rounded w-full focus:ring focus:ring-indigo-200"
+        placeholder="10-digit number"
+      />
+    </div>
+
+    
+    <div>
+      <label className="block text-gray-700 font-medium mb-1">Skills</label>
+      <input
+        type="text"
+        value={skills}
+        onChange={(e) => setSkills(e.target.value)}
+        required
+        className="border p-2 rounded w-full focus:ring focus:ring-indigo-200"
+        placeholder="e.g. React, Node.js, MongoDB"
+      />
+    </div>
+
+   
+    <div>
+      <label className="block text-gray-700 font-medium mb-1">Education</label>
+      <input
+        type="text"
+        value={education}
+        onChange={(e) => setEducation(e.target.value)}
+        required
+        className="border p-2 rounded w-full focus:ring focus:ring-indigo-200"
+        placeholder="e.g. B.Tech in CSE"
+      />
+    </div>
+
+    
+    <div>
+      <label className="block text-gray-700 font-medium mb-1">
+        Upload Resume (PDF)
+      </label>
+      <input
+        type="file"
+        onChange={(e) => setResumeFile(e.target.files[0])}
+        accept=".pdf"
+        className="border p-2 rounded w-full"
+      />
+    </div>
+
+   
+    <div>
+      <label className="block text-gray-700 font-medium mb-1">
+        Upload Cover Letter (PDF)
+      </label>
+      <input
+        type="file"
+        onChange={(e) => setCoverLetterFile(e.target.files[0])}
+        accept=".pdf"
+        className="border p-2 rounded w-full"
+      />
+    </div>
+
+   
+    <div className="flex gap-3">
+      <button
+        type="submit"
+        className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+      >
+        Submit Application
+      </button>
+      <button
+        type="button"
+        onClick={() => setShowForm(false)}
+        className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+      >
+        Cancel
+      </button>
+    </div>
+  </form>
+)}
       </div>
     </div>
   );

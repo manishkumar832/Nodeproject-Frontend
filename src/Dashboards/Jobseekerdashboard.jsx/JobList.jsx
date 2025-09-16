@@ -37,17 +37,17 @@ const JobList = () => {
     }
   };
 
-  // Fetch on mount
+  
   useEffect(() => {
     fetchJobsAndApplications();
   }, [token]);
 
-  // Listen to localStorage changes for live updates
+  
   useEffect(() => {
     const handleStorageChange = () => {
       if (localStorage.getItem("jobApplied") === "true") {
         fetchJobsAndApplications();
-        localStorage.removeItem("jobApplied"); // reset
+        localStorage.removeItem("jobApplied"); 
       }
     };
 

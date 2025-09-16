@@ -42,7 +42,6 @@ const MyApplications = () => {
     }
   };
 
-  // helper to style status
   const getStatusStyle = (status) => {
     switch (status) {
       case "applied":
